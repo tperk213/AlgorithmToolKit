@@ -3,24 +3,36 @@
 
 
 #Method 1
-#   Travel down the tree recursivley the side is based on if the target - node val
+#   Travel down the tree recursivley the side is based on if the target - node val is smaller or largers then 0
 #   as returning up the tree return the current nod val or the closest in the child which ever is closer to target
 
+#time
+#   Av = O(log(n))
+#   worst = O(n) because it could be tree with one branch
 
-#   set the curr_dif to target - root node val
-#   closest = node.val
-#   closest in child = none
-# 
-#   if curr_diff is below  0 then then we should explore the left side of the tree
-#   if curr_diff is above 0 then we should explore the right side of the tree as target is above current val
-#   
-#   use recurion to call function on the left or right side determined above
-#   base case is the way we want to go(left or right) doesnt exist meaning we are at a leaf node
-#       in this case return the leaf node val  
-#   store the result of recursion in closest_in_child
-#   if abs( of target - closest in child) is smaller then abs current_diff
-#       then there is a closer node in the child tree and this should be returned
-#   else
-#       return this node val
- 
+#Space
+#   recursive
+#   same as time
+#   O(log(n)) worst O(n)
+#   Iterative
+#   constant O(1)   
 
+
+#recursive
+def findClosestValueInBst(tree, target):
+    # Write your code here.
+	closest = tree.value
+	current_diff = target - tree.value
+	closest_in_child = None
+	
+	if (current_diff < 0) and (tree.left != None) :
+		closest_in_child = findClosestValueInBst(tree.left,target)
+	elif current_diff > 0 and (tree.right != None):
+		closest_in_child = findClosestValueInBst(tree.right,target)
+	else:
+		return tree.value
+	if abs(target - closest_in_child) < abs(current_diff):
+		closest = closest_in_child
+	return closest
+
+#itterative
